@@ -29,7 +29,7 @@ mapping(address => uint256) public cooldownTime;
 /**
  * @dev Changes the faucetAmount.
  */ 
-function changeFauceAmount(uint256 _amount) public onlyOwner {
+function changeFaucetAmount(uint256 _amount) public onlyOwner {
     faucetAmount = _amount;
 }
 
@@ -45,7 +45,7 @@ function changeAddressNEL(address _address) public onlyOwner {
  */
 function nelFaucet() public returns(bool) {
     require(block.timestamp > cooldownTime[_msgSender()], "Still in the cooldown time.");
-    cooldownTime[_msgSender()] = cooldownTime[_msgSender()] + 1 days;
+    cooldownTime[_msgSender()] = block.timestamp + 1 days;
     INEL token = INEL(AddressNEL);
     token.issuerMint(_msgSender(), faucetAmount);
     return true;
